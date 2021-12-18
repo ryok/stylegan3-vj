@@ -1,21 +1,21 @@
 import os
 import pickle
 import sys
-import torch
+
 import numpy as np
 import PIL.Image
-
+import torch
 from tqdm import tqdm
 
 sys.path.append("/stylegan3")
 import argparse
 
 import dnnlib
-import yaml
 import legacy
+import yaml
 
+device = torch.device("cuda")
 
-device = torch.device('cuda')
 
 def get_rmse_feature(feature_path):
     return np.load(feature_path)
@@ -40,9 +40,7 @@ def normalize_vec(vec, unit_length, factor_length):
 
 def get_noise_vars(G):
     print(G.synthesis.w_dim)
-    noise_vars = [
-        var for name, var in G.synthesis.w_dim if name.startswith("noise")
-    ]
+    noise_vars = [var for name, var in G.synthesis.w_dim if name.startswith("noise")]
     noise_pairs = list(zip(noise_vars, tflib.run(noise_vars)))
     return noise_vars
 
@@ -109,7 +107,7 @@ def gen_image_mix(
 
     # Labels.
     label = torch.zeros([1, G.c_dim], device=device)
-    noise_mode = 'const' #'random'
+    noise_mode = "const"  #'random'
 
     # print(combined_dlatents.shape)
     # combined_dlatents = torch.from_numpy(np.random.RandomState(1).randn(1, G.z_dim)).to(device)
@@ -120,10 +118,10 @@ def gen_image_mix(
     #         for seed in seeds)).to(device)
     # print(combined_dlatents.shape)
 
-    img = G.synthesis(combined_dlatents, noise_mode='const', force_fp32=True)
+    img = G.synthesis(combined_dlatents, noise_mode="const", force_fp32=True)
     # img = G(combined_dlatents, label, truncation_psi=truncation_psi, noise_mode=noise_mode)
     img = (img.permute(0, 2, 3, 1) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
-    PIL.Image.fromarray(img[0].cpu().numpy(), 'RGB').save(save_path)
+    PIL.Image.fromarray(img[0].cpu().numpy(), "RGB").save(save_path)
 
 
 def main():
@@ -154,7 +152,7 @@ def main():
 
     print('Loading networks from "%s"...' % arguments.model_path)
     with dnnlib.util.open_url(arguments.model_path) as f:
-        G = legacy.load_network_pkl(f)['G_ema'].to(device) # type: ignore
+        G = legacy.load_network_pkl(f)["G_ema"].to(device)  # type: ignore
 
     seed = 1
     latents = torch.from_numpy(np.random.RandomState(seed).randn(1, G.z_dim)).to(device)
