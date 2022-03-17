@@ -1,5 +1,10 @@
-# StyleGAN3 VJ
+# StyleGAN3-VJ
 
+StyleGAN3-VJ create audio reactive visuals for VJ using StyleGAN3.
+
+## Usage
+
+StyleGAN3-VJ can be run in Docker.
 
 ```bash
 docker build . -t stylegan3vj:1.0 -f Dockerfile
