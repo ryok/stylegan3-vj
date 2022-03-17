@@ -2,11 +2,11 @@
 
 
 ```bash
-docker build . -t `whoami`_svj:2.0 -f Dockerfile
+docker build . -t stylegan3vj:1.0 -f Dockerfile
 
 docker run --runtime=nvidia -it \
  --rm -v `pwd`:/workspace \
- --name `whoami`_svj `whoami`_svj:2.0 /bin/bash
+ --name stylegan3vj stylegan3vj:1.0 /bin/bash
 ```
 
 ```bash
