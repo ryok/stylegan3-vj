@@ -2,6 +2,10 @@
 
 StyleGAN3-VJ create audio reactive visuals for VJ using StyleGAN3.
 
+## Reference
+
+https://github.com/hanhung/Creating-Audio-Reactive-Visuals-With-StyleGAN
+
 ## Usage
 
 StyleGAN3-VJ can be run in Docker.
